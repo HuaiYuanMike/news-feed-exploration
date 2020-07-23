@@ -1,8 +1,14 @@
 package com.example.newsFeed.mainFeed.data
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class Note(
-    val title: String = "",
-    val author: String = "",
-    val desc: String = "",
-    val timeStamp: Long = 0
+    @PrimaryKey val id: Int,
+    @ColumnInfo(name = "title") val title: String = "",
+    @ColumnInfo(name = "author") val author: String = "",
+    @ColumnInfo(name = "content") val content: String = "",
+    @ColumnInfo(name = "time_stamp") val timestamp: Long = 0
 )
