@@ -16,5 +16,5 @@ interface NoteDao {
     fun deleteNotes(vararg notes: Note)
 
     @Query("SELECT * FROM note")
-    fun loadAllNotes(): Array<Note>
+    fun loadAllNotes(): List<Note>
 }
