@@ -12,8 +12,10 @@ import com.example.newsFeed.R
 
 class MainFeedFragment : Fragment() {
 
-    lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var emptyView: View
     private val listAdapter = MainFeedListAdapter()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,9 +29,24 @@ class MainFeedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        emptyView = view.findViewById(R.id.empty_view)
+
         initToolbar(view)
 
         initRecyclerView(view)
+
+        renderList(view)
+    }
+
+
+    private fun renderList(rootView: View) {
+        if (listAdapter.itemList.isNotEmpty()) {
+            emptyView.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
+        } else {
+            emptyView.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
+        }
     }
 
     private fun initRecyclerView(rootView: View) {
