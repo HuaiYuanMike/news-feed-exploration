@@ -1,12 +1,11 @@
 package com.example.newsFeed.di
 
-import com.example.newsFeed.mainFeed.domain.NoteUseCase
-import com.example.newsFeed.mainFeed.repository.NoteRepository
+import com.example.newsFeed.mainFeed.presentation.MainFeedViewModelFactory
 import dagger.Component
+import javax.inject.Singleton
 
-@Component (modules = [AppModule::class])
+@Singleton
+@Component(modules = [AppModule::class])
 interface AppComponent {
-    fun inject(noteRepository: NoteRepository)
-
-    fun inject(noteUseCase: NoteUseCase)
+    fun inject(mainFeedViewModelFactory: MainFeedViewModelFactory)
 }

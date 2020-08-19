@@ -5,9 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.newsFeed.mainFeed.data.Note
 import com.example.newsFeed.mainFeed.domain.NoteUseCase
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainFeedViewModel constructor(private val noteUseCase: NoteUseCase) : ViewModel() {
+class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase) : ViewModel() {
 
     private val _notes: MutableLiveData<List<Note>> = MutableLiveData<List<Note>>()
 

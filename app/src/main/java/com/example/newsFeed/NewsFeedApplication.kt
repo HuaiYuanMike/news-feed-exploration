@@ -11,7 +11,6 @@ class NewsFeedApplication : Application() {
         lateinit var instance: NewsFeedApplication
     }
 
-
     lateinit var appComponent: AppComponent
 
     override fun onCreate() {
