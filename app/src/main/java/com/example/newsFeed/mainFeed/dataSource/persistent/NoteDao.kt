@@ -7,14 +7,14 @@ import com.example.newsFeed.mainFeed.data.Note
 interface NoteDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertNotes(vararg notes: Note)
+    suspend fun insertNotes(notes: Note)
 
     @Update
-    fun updateNotes(vararg notes: Note)
+    suspend fun updateNotes(vararg notes: Note)
 
     @Delete
-    fun deleteNotes(vararg notes: Note)
+    suspend fun deleteNotes(vararg notes: Note)
 
     @Query("SELECT * FROM note")
-    fun loadAllNotes(): List<Note>
+    suspend fun loadAllNotes(): List<Note>
 }

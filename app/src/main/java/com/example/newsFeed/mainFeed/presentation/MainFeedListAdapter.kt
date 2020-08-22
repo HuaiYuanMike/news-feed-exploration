@@ -10,25 +10,12 @@ import com.example.newsFeed.mainFeed.data.Note
 
 class MainFeedListAdapter : RecyclerView.Adapter<MainFeedListAdapter.MainFeedViewHolder>() {
 
-    // TODO Test list
-    val itemList: List<Note> = listOf(
-        Note(0, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(1, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(2, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(3, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(4, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(5, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(6, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(7, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(8, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(9, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(10, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?")
-    )
+    var itemList: List<Note> = emptyList()
 
     class MainFeedViewHolder(itemView: View) : RecyclerView.ViewHolder (itemView){
 
-        val title = itemView.findViewById<TextView>(R.id.title)
-        val content = itemView.findViewById<TextView>(R.id.content)
+        private val title = itemView.findViewById<TextView>(R.id.title)
+        private val content = itemView.findViewById<TextView>(R.id.content)
 
         fun bind(item: Note) {
             title.text = item.title

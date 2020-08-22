@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsFeed.R
+import com.example.newsFeed.mainFeed.data.Note
 
 class MainFeedFragment : Fragment() {
 
@@ -19,6 +21,22 @@ class MainFeedFragment : Fragment() {
     private lateinit var emptyView: View
     private lateinit var mainFeedViewModel: MainFeedViewModel
 
+    private val testList = listOf(
+        Note(0, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
+        Note(1, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
+        Note(2, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
+        Note(3, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
+        Note(4, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
+        Note(5, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
+        Note(6, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
+        Note(7, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
+        Note(8, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
+        Note(9, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
+        Note(10, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?")
+    )
+
+    private val testNote = Note(0, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,6 +44,15 @@ class MainFeedFragment : Fragment() {
             this,
             MainFeedViewModelFactory()
         ).get(MainFeedViewModel::class.java)
+
+        // Observe and render states
+        mainFeedViewModel.notes.observe(this,
+            Observer<List<Note>> { t -> renderList(t) })
+
+        // TODO TEST
+        if (mainFeedViewModel.notes.value.isNullOrEmpty()) {
+            mainFeedViewModel.insertNote(testNote)
+        }
     }
 
     override fun onCreateView(
@@ -45,12 +72,18 @@ class MainFeedFragment : Fragment() {
         initToolbar(view)
 
         initRecyclerView(view)
-
-        renderList(view)
     }
 
+    override fun onResume() {
+        super.onResume()
 
-    private fun renderList(rootView: View) {
+        // Invoke action
+        mainFeedViewModel.getAllNotes()
+    }
+
+    private fun renderList(itemList: List<Note>?) {
+        listAdapter.itemList = itemList ?: emptyList()
+
         if (listAdapter.itemList.isNotEmpty()) {
             emptyView.visibility = View.GONE
             recyclerView.visibility = View.VISIBLE
