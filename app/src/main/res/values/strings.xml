@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Feed Explore</string>
+    <string name="action_btn_add_note">Add New Notes</string>
 </resources>

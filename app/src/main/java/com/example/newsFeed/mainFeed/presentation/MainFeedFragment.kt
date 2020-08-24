@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsFeed.R
 import com.example.newsFeed.mainFeed.data.Note
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainFeedFragment : Fragment() {
 
@@ -20,6 +21,7 @@ class MainFeedFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var emptyView: View
     private lateinit var mainFeedViewModel: MainFeedViewModel
+    private lateinit var fab: FloatingActionButton
 
     private val testList = listOf(
         Note(0, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
@@ -68,6 +70,13 @@ class MainFeedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         emptyView = view.findViewById(R.id.empty_view)
+        fab = view.findViewById(R.id.fab)
+
+        fab.setOnClickListener {
+            // TODO Open a dialog / fragment for user to add a new note
+
+            mainFeedViewModel.insertNote(Note(2, "TestNode Two", "Mike","This is a test note content.", System.currentTimeMillis()))
+        }
 
         initToolbar(view)
 

@@ -10,10 +10,10 @@ interface NoteDao {
     suspend fun insertNotes(notes: Note)
 
     @Update
-    suspend fun updateNotes(vararg notes: Note)
+    suspend fun updateNotes(notes: Note)
 
     @Delete
-    suspend fun deleteNotes(vararg notes: Note)
+    suspend fun deleteNotes(notes: Note)
 
     @Query("SELECT * FROM note")
     suspend fun loadAllNotes(): List<Note>
