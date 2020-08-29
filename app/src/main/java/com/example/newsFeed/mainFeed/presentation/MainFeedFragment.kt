@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.newsFeed.R
 import com.example.newsFeed.mainFeed.data.Note
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlin.random.Random
 
 class MainFeedFragment : Fragment() {
 
@@ -75,7 +76,7 @@ class MainFeedFragment : Fragment() {
         fab.setOnClickListener {
             // TODO Open a dialog / fragment for user to add a new note
 
-            mainFeedViewModel.insertNote(Note(2, "TestNode Two", "Mike","This is a test note content.", System.currentTimeMillis()))
+            mainFeedViewModel.insertNote(Note(Random.nextInt(2, 200), "TestNode ${id.toString()}", "Mike","This is a test note content.", System.currentTimeMillis()))
         }
 
         initToolbar(view)
@@ -92,7 +93,7 @@ class MainFeedFragment : Fragment() {
 
     private fun renderList(itemList: List<Note>?) {
         listAdapter.itemList = itemList ?: emptyList()
-
+        listAdapter.notifyDataSetChanged()
         if (listAdapter.itemList.isNotEmpty()) {
             emptyView.visibility = View.GONE
             recyclerView.visibility = View.VISIBLE

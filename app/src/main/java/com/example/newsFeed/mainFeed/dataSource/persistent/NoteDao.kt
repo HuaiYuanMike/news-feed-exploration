@@ -2,6 +2,7 @@ package com.example.newsFeed.mainFeed.dataSource.persistent
 
 import androidx.room.*
 import com.example.newsFeed.mainFeed.data.Note
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDao {
@@ -16,5 +17,5 @@ interface NoteDao {
     suspend fun deleteNotes(notes: Note)
 
     @Query("SELECT * FROM note")
-    suspend fun loadAllNotes(): List<Note>
+    fun loadAllNotes(): Flow<List<Note>>
 }

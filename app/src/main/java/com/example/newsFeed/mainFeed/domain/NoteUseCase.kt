@@ -2,11 +2,12 @@ package com.example.newsFeed.mainFeed.domain
 
 import com.example.newsFeed.mainFeed.data.Note
 import com.example.newsFeed.mainFeed.repository.NoteRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class NoteUseCase @Inject constructor(private val repository: NoteRepository) {
 
-    suspend fun retrieveAllNotes(): List<Note> {
+    fun retrieveAllNotes(): Flow<List<Note>> {
         return repository.retrieveAllNotes()
     }
 

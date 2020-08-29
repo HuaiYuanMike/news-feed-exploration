@@ -1,10 +1,13 @@
 package com.example.newsFeed.mainFeed.presentation
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.newsFeed.mainFeed.data.Note
 import com.example.newsFeed.mainFeed.domain.NoteUseCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,12 +19,13 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
 
     // This does not need to be suspend
     fun getAllNotes() = viewModelScope.launch(Dispatchers.Default) {
-        _notes.postValue(noteUseCase.retrieveAllNotes())
+        noteUseCase.retrieveAllNotes().collect {
+            list -> _notes.postValue(list)
+        }
     }
 
     fun insertNote(note: Note) = viewModelScope.launch(Dispatchers.Default) {
         noteUseCase.insertNote(note)
-
     }
 }
 
