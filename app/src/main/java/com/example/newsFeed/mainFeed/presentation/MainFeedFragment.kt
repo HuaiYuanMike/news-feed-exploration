@@ -76,7 +76,8 @@ class MainFeedFragment : Fragment() {
         fab.setOnClickListener {
             // TODO Open a dialog / fragment for user to add a new note
 
-            mainFeedViewModel.insertNote(Note(Random.nextInt(2, 200), "TestNode ${id.toString()}", "Mike","This is a test note content.", System.currentTimeMillis()))
+            val id = Random.nextInt(2, 200)
+            mainFeedViewModel.insertNote(Note(id, "TestNode ${id.toString()}", "Mike","This is a test note content.", System.currentTimeMillis()))
         }
 
         initToolbar(view)
@@ -92,8 +93,9 @@ class MainFeedFragment : Fragment() {
     }
 
     private fun renderList(itemList: List<Note>?) {
-        listAdapter.itemList = itemList ?: emptyList()
-        listAdapter.notifyDataSetChanged()
+
+        listAdapter.updateList(itemList ?: emptyList())
+
         if (listAdapter.itemList.isNotEmpty()) {
             emptyView.visibility = View.GONE
             recyclerView.visibility = View.VISIBLE

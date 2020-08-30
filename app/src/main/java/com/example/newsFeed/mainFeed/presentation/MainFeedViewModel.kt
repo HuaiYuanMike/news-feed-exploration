@@ -31,7 +31,6 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
 
 // TODO Next Big features
 // 1. Action buttons to insert
-// 1.1 Adding should trigger reload - room feature (?), since the data set changed.
 // 1.2 Dialog for adding new note
 // 2. DiffUtil for recyclerView
 // 3. Swipe to remove
