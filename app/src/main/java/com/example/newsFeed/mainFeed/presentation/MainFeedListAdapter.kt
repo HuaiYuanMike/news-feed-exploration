@@ -11,7 +11,7 @@ import com.example.newsFeed.mainFeed.data.Note
 
 class MainFeedListAdapter : RecyclerView.Adapter<MainFeedListAdapter.MainFeedViewHolder>() {
 
-    var itemList: List<Note> = emptyList()
+    var itemList: List<Note> = arrayListOf()
 
     class MainFeedViewHolder(itemView: View) : RecyclerView.ViewHolder (itemView){
 

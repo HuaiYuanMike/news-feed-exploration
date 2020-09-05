@@ -17,6 +17,9 @@ class NoteUseCase @Inject constructor(private val repository: NoteRepository) {
     }
 
     // Delete one Note
+    suspend fun deleteNote(note: Note) {
+        repository.deleteNote(note)
+    }
 
     // Update one Note
 }

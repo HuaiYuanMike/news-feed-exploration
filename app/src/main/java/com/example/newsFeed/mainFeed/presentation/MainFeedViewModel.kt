@@ -27,6 +27,10 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
     fun insertNote(note: Note) = viewModelScope.launch(Dispatchers.Default) {
         noteUseCase.insertNote(note)
     }
+
+    fun deleteNote(note: Note) = viewModelScope.launch {
+        noteUseCase.deleteNote(note)
+    }
 }
 
 // TODO Next Big features
@@ -52,3 +56,8 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
 // 5. HILT
 // 6. Retrofit - REST API - HTTP ?
 // 7. Image loading library
+
+
+// TODO Future
+//  - Paging Library from Jetpack
+// https://proandroiddev.com/exploring-paging-library-from-jetpack-c661c7399662

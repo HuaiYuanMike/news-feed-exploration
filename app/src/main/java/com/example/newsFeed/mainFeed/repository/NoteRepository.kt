@@ -14,4 +14,8 @@ class NoteRepository @Inject constructor(private val roomDatabase: AppDatabase) 
     suspend fun insertNode(note: Note) {
         roomDatabase.getNoteDao().insertNotes(note)
     }
+
+    suspend fun deleteNote(note: Note) {
+        roomDatabase.getNoteDao().deleteNotes(note)
+    }
 }

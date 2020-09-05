@@ -1,13 +1,18 @@
 package com.example.newsFeed.mainFeed.presentation
 
+import android.graphics.Canvas
+import android.graphics.ColorFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SimpleAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsFeed.R
@@ -109,11 +114,43 @@ class MainFeedFragment : Fragment() {
         recyclerView = rootView.findViewById(R.id.recycler_view)
         recyclerView.adapter = listAdapter
         recyclerView.layoutManager = LinearLayoutManager(this.context)
+        ItemTouchHelper(object : SwipeItemTouchHelperCallback() {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val apdapter = (recyclerView.adapter as MainFeedListAdapter)
+                val note = apdapter.itemList[viewHolder.adapterPosition]
+                mainFeedViewModel.deleteNote(note)
+            }
+        }).attachToRecyclerView(recyclerView)
         //        recyclerView.addItemDecoration(DividerItemDecoration(this.context, RecyclerView.VERTICAL))
     }
 
     private fun initToolbar(rootView: View) {
         (activity as AppCompatActivity).setSupportActionBar(rootView.findViewById(R.id.tool_bar))
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.app_name)
+    }
+
+    abstract class SwipeItemTouchHelperCallback : ItemTouchHelper.Callback() {
+        override fun getMovementFlags(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder
+        ): Int = makeFlag(ACTION_STATE_SWIPE, (LEFT or RIGHT))
+
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ) = false
+
+        override fun onChildDraw(
+            c: Canvas,
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            dX: Float,
+            dY: Float,
+            actionState: Int,
+            isCurrentlyActive: Boolean
+        ) {
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+        }
     }
 }
