@@ -25,7 +25,7 @@ class MainFeedListAdapter : RecyclerView.Adapter<MainFeedListAdapter.MainFeedVie
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainFeedViewHolder {
-        return MainFeedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_main_feed_card, parent, false))
+        return MainFeedViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_main_feed_note, parent, false))
     }
 
     override fun getItemCount(): Int = itemList.size

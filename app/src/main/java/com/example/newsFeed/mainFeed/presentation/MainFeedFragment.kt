@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.newsFeed.R
 import com.example.newsFeed.mainFeed.data.Note
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.random.Random
 
 class MainFeedFragment : Fragment() {
@@ -79,9 +81,18 @@ class MainFeedFragment : Fragment() {
 
         fab.setOnClickListener {
             // TODO Open a dialog / fragment for user to add a new note
+//            view.findViewById<FrameLayout>(R.id.container)?.apply {
+//                fragmentManager?.beginTransaction()?.apply {
+//                    add( R.id.container, NoteEditFragment(), NoteEditFragment::class.simpleName)
+//                    commit()
+//                }
+//            }
 
-            val id = Random.nextInt(2, 200)
-            mainFeedViewModel.insertNote(Note(id, "TestNode ${id.toString()}", "Mike","This is a test note content.", System.currentTimeMillis()))
+            NoteEditFragment().show(fragmentManager!!, NoteEditFragment::class.simpleName)
+
+            // Test
+//            val id = Random.nextInt(2, 200)
+//            mainFeedViewModel.insertNote(Note(id, "TestNode ${id.toString()}", "Mike","This is a test note content.", System.currentTimeMillis()))
         }
 
         initToolbar(view)
