@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,11 +14,10 @@ import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE
 import androidx.recyclerview.widget.ItemTouchHelper.LEFT
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.newsFeed.editnote.presentation.EditNoteFragment
 import com.example.newsFeed.R
 import com.example.newsFeed.mainFeed.data.Note
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.random.Random
 
 class MainFeedFragment : Fragment() {
 
@@ -80,19 +78,8 @@ class MainFeedFragment : Fragment() {
         fab = view.findViewById(R.id.fab)
 
         fab.setOnClickListener {
-            // TODO Open a dialog / fragment for user to add a new note
-//            view.findViewById<FrameLayout>(R.id.container)?.apply {
-//                fragmentManager?.beginTransaction()?.apply {
-//                    add( R.id.container, NoteEditFragment(), NoteEditFragment::class.simpleName)
-//                    commit()
-//                }
-//            }
-
-            NoteEditFragment().show(fragmentManager!!, NoteEditFragment::class.simpleName)
-
-            // Test
-//            val id = Random.nextInt(2, 200)
-//            mainFeedViewModel.insertNote(Note(id, "TestNode ${id.toString()}", "Mike","This is a test note content.", System.currentTimeMillis()))
+            EditNoteFragment()
+                .show(fragmentManager!!, EditNoteFragment::class.simpleName)
         }
 
         initToolbar(view)

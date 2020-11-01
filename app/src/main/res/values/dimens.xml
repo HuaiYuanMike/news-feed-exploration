@@ -2,4 +2,13 @@
 <resources>
     <dimen name="mainFeed_item_height">128dp</dimen>
     <dimen name="mainFeed_item_padding">8dp</dimen>
+
+    <!-- Edit Note -->
+    <dimen name="edit_note_padding">16dp</dimen>
+    <dimen name="edit_note_title_padding">4dp</dimen>
+    <dimen name="edit_note_edit_view_width">256dp</dimen>
+    <dimen name="edit_note_edit_view_height">128dp</dimen>
+    <dimen name="edit_note_item_title_guideline">64dp</dimen>
+    <dimen name="edit_note_btn_margin">4dp</dimen>
+
 </resources>
