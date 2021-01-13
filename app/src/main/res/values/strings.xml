@@ -2,5 +2,7 @@
     <string name="app_name">Feed Explore</string>
     <string name="action_btn_add_note">Add New Notes</string>
     <string name="edit_note_confirm_button">Add</string>
-    <string name="edit_note_title">Title</string>
+    <string name="edit_note_title_title">Title</string>
+    <string name="edit_note_content_title">Content</string>
+    <string name="edit_note_author_title">Author</string>
 </resources>

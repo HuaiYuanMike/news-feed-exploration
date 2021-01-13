@@ -1,5 +1,6 @@
 package com.example.newsFeed.editnote.presentation
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsFeed.NewsFeedApplication
@@ -8,7 +9,7 @@ import com.example.newsFeed.mainFeed.domain.NoteUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class EditNoteViewModel : ViewModel() {
+class EditNoteViewModel(val state: SavedStateHandle) : ViewModel() {
 
     @Inject
     lateinit var noteUseCase: NoteUseCase

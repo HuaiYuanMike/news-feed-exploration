@@ -79,7 +79,7 @@ class MainFeedFragment : Fragment() {
 
         fab.setOnClickListener {
             EditNoteFragment()
-                .show(fragmentManager!!, EditNoteFragment::class.simpleName)
+                .show(requireFragmentManager(), EditNoteFragment::class.simpleName)
         }
 
         initToolbar(view)
