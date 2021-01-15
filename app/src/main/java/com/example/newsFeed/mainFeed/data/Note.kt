@@ -10,5 +10,5 @@ data class Note(
     @ColumnInfo(name = "title") val title: String = "",
     @ColumnInfo(name = "author") val author: String = "",
     @ColumnInfo(name = "content") val content: String = "",
-    @ColumnInfo(name = "time_stamp") val timestamp: Long = 0
-)
+    @ColumnInfo(name = "imageUri") val imageUri: String = "",
+    @ColumnInfo(name = "time_stamp") val timestamp: Long = 0)
