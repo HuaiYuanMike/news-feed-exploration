@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsFeed.R
-import com.example.newsFeed.mainFeed.data.Note
+import com.example.newsFeed.mainFeed.model.Note
 
 class MainFeedListAdapter : RecyclerView.Adapter<MainFeedListAdapter.MainFeedViewHolder>() {
 

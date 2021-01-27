@@ -11,7 +11,7 @@ import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.example.newsFeed.R
-import com.example.newsFeed.mainFeed.data.Note
+import com.example.newsFeed.mainFeed.model.Note
 
 class EditNoteFragment : DialogFragment() {
 

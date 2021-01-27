@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsFeed.NewsFeedApplication
-import com.example.newsFeed.mainFeed.data.Note
+import com.example.newsFeed.mainFeed.model.Note
 import com.example.newsFeed.mainFeed.domain.NoteUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject

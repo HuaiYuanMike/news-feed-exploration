@@ -1,4 +1,4 @@
-package com.example.newsFeed.mainFeed.data
+package com.example.newsFeed.mainFeed.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

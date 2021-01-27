@@ -1,7 +1,7 @@
 package com.example.newsFeed.mainFeed.dataSource.persistent
 
 import androidx.room.*
-import com.example.newsFeed.mainFeed.data.Note
+import com.example.newsFeed.mainFeed.model.Note
 import kotlinx.coroutines.flow.Flow
 
 @Dao

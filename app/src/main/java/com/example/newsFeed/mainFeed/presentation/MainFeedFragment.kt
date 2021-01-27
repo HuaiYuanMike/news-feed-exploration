@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsFeed.editnote.presentation.EditNoteFragment
 import com.example.newsFeed.R
-import com.example.newsFeed.mainFeed.data.Note
+import com.example.newsFeed.mainFeed.model.Note
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainFeedFragment : Fragment() {
