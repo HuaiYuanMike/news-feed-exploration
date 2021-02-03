@@ -2,6 +2,7 @@
 <resources>
     <dimen name="mainFeed_item_height">128dp</dimen>
     <dimen name="mainFeed_item_padding">8dp</dimen>
+    <dimen name="item_note_image_dimen">54dp</dimen>
 
     <!-- Edit Note -->
     <dimen name="edit_note_padding">16dp</dimen>

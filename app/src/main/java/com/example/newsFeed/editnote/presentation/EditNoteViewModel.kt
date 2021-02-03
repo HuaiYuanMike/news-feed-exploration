@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.newsFeed.NewsFeedApplication
 import com.example.newsFeed.mainFeed.model.Note
 import com.example.newsFeed.mainFeed.domain.NoteUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,7 +20,7 @@ class EditNoteViewModel(val state: SavedStateHandle) : ViewModel() {
     }
 
     fun insertNote(note: Note) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Default) {
             noteUseCase.insertNote(note)
         }
     }

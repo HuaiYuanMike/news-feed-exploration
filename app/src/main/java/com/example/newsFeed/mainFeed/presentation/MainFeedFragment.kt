@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE
 import androidx.recyclerview.widget.ItemTouchHelper.LEFT
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsFeed.editnote.presentation.EditNoteFragment
 import com.example.newsFeed.R
+import com.example.newsFeed.editnote.presentation.EditNoteFragment
 import com.example.newsFeed.mainFeed.model.Note
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -25,7 +25,7 @@ class MainFeedFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var emptyView: View
-    private lateinit var mainFeedViewModel: MainFeedViewModel
+    private lateinit var mainFeedViewModel: MainFeedViewModel 
     private lateinit var fab: FloatingActionButton
 
     private val testList = listOf(
@@ -92,6 +92,10 @@ class MainFeedFragment : Fragment() {
 
         // Invoke action
         mainFeedViewModel.getAllNotes()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     private fun renderList(itemList: List<Note>?) {
