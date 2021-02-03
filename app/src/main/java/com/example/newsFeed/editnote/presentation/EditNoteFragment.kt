@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.newsFeed.R
 import com.example.newsFeed.mainFeed.model.Note
 
@@ -27,6 +28,20 @@ class EditNoteFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupConfirmButton(view)
+        editNoteViewModel.editNoteStates.observe(this,
+            Observer<EditNoteState> {
+                when (it) {
+                    EditNoteState.Finished -> {
+                        Log.d(this.javaClass.simpleName, "Note created with id: $id")
+                        dialog?.dismiss()
+                    }
+                }
+            })
+
+    }
+
+    private fun setupConfirmButton(view: View) {
         view.findViewById<Button>(R.id.confirm_button).setOnClickListener {
             val id = System.currentTimeMillis().toInt()
             val title = view.findViewById<EditText>(R.id.title_text).text.toString()
@@ -35,11 +50,8 @@ class EditNoteFragment : DialogFragment() {
 
             val note = Note(id, title, author, content)
             editNoteViewModel.insertNote(note)
-            Log.d(this.javaClass.simpleName, "Note created with id: $id")
-            dialog?.dismiss()
         }
     }
-
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(
