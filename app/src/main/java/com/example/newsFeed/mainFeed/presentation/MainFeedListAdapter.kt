@@ -3,11 +3,13 @@ package com.example.newsFeed.mainFeed.presentation
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsFeed.R
 import com.example.newsFeed.mainFeed.model.Note
+import com.squareup.picasso.Picasso
 
 class MainFeedListAdapter : RecyclerView.Adapter<MainFeedListAdapter.MainFeedViewHolder>() {
 
@@ -17,10 +19,14 @@ class MainFeedListAdapter : RecyclerView.Adapter<MainFeedListAdapter.MainFeedVie
 
         private val title = itemView.findViewById<TextView>(R.id.title)
         private val content = itemView.findViewById<TextView>(R.id.content)
+        private val imageDisplay = itemView.findViewById<ImageView>(R.id.image_display)
 
-        fun bind(item: Note) {
-            title.text = item.title
-            content.text = item.content
+        fun bind(note: Note) {
+            title.text = note.title
+            content.text = note.content
+
+            // load and display image
+            Picasso.with(itemView.context).load(note.imageUri).fit().into(imageDisplay)
         }
     }
 

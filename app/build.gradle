@@ -83,8 +83,8 @@ dependencies {
     kapt 'com.google.dagger:dagger-android-processor:2.20'
     kapt 'com.google.dagger:dagger-compiler:2.20'
 
-    // Volley
-    implementation 'com.android.volley:volley:1.1.1'
+    // Picasso
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
