@@ -6,9 +6,8 @@
         android:layout_height="match_parent"
         tools:context=".mainFeed.presentation.MainActivity">
 
-    <fragment
-            android:id="@+id/fragment"
-            android:name="com.example.newsFeed.mainFeed.presentation.MainFeedFragment"
+    <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
