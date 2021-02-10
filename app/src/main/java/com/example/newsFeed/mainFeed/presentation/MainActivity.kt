@@ -20,12 +20,19 @@ class MainActivity : AppCompatActivity() {
         viewPager = findViewById(R.id.viewpager)
         viewPager.adapter = MainViewPagerAdapter(this)
 
+        initToolbar()
+
         val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
         TabLayoutMediator(tabLayout, viewPager,
             TabLayoutMediator.TabConfigurationStrategy { tab, position ->
                 tab.text = "Title $position"
             }
         ).attach()
+    }
+
+    private fun initToolbar() {
+        setSupportActionBar(findViewById(R.id.tool_bar))
+        supportActionBar?.title = getString(R.string.app_name)
     }
 
     private class MainViewPagerAdapter(fragmentActivity: FragmentActivity) :
@@ -35,5 +42,6 @@ class MainActivity : AppCompatActivity() {
         override fun createFragment(position: Int): Fragment {
             return MainFeedFragment()
         }
+
     }
 }
