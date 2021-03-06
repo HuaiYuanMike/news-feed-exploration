@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -82,8 +81,6 @@ class MainFeedFragment : Fragment() {
                 .show(requireFragmentManager(), EditNoteFragment::class.simpleName)
         }
 
-        initToolbar(view)
-
         initRecyclerView(view)
     }
 
@@ -123,11 +120,6 @@ class MainFeedFragment : Fragment() {
             }
         }).attachToRecyclerView(recyclerView)
         //        recyclerView.addItemDecoration(DividerItemDecoration(this.context, RecyclerView.VERTICAL))
-    }
-
-    private fun initToolbar(rootView: View) {
-        (activity as AppCompatActivity).setSupportActionBar(rootView.findViewById(R.id.tool_bar))
-        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.app_name)
     }
 
     abstract class SwipeItemTouchHelperCallback : ItemTouchHelper.Callback() {

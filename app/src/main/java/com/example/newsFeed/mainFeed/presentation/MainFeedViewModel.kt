@@ -1,5 +1,6 @@
 package com.example.newsFeed.mainFeed.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,11 +8,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.newsFeed.mainFeed.model.Note
 import com.example.newsFeed.mainFeed.domain.NoteUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase) : ViewModel() {
+
+    private val TAG = javaClass.simpleName
 
     private val _notes: MutableLiveData<List<Note>> = MutableLiveData<List<Note>>()
 
@@ -19,9 +23,14 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
 
     // This does not need to be suspend
     fun getAllNotes() = viewModelScope.launch(Dispatchers.Default) {
-        noteUseCase.retrieveAllNotes().collect {
-            list -> _notes.postValue(list)
-        }
+        noteUseCase.retrieveAllNotes()
+            .catch { exception ->
+                Log.d(TAG, exception.message)
+                // TODO Error Handling
+            }
+            .collect { list ->
+                _notes.postValue(list)
+            }
     }
 
     fun insertNote(note: Note) = viewModelScope.launch(Dispatchers.Default) {
