@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.newsFeed.mainFeed.model.Note
 import com.example.newsFeed.mainFeed.domain.NoteUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -21,6 +22,20 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
 
     val notes: LiveData<List<Note>> = _notes
 
+    private val _states: MutableLiveData<State> = MutableLiveData(State(isLoading = false))
+
+    val states: LiveData<State> = _states
+
+    private val changes: Channel<Change> = Channel()
+
+    init {
+        viewModelScope.launch {
+            for (change in changes) {
+                _states.value = reducer(_states.value!!, change)
+            }
+        }
+    }
+
     // This does not need to be suspend
     fun getAllNotes() = viewModelScope.launch(Dispatchers.Default) {
         noteUseCase.retrieveAllNotes()
@@ -33,6 +48,29 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
             }
     }
 
+    fun dispatchAction(action: Action) = viewModelScope.launch {
+        // Start to produce event to the stream.
+        when (action) {
+            is Action.InsertNote -> {
+                changes.send(Change.Loading)
+                // TODO change to changes.send(noteUseCase.insertNote(action.note))
+                noteUseCase.insertNote(action.note)
+                changes.send(Change.InsertNode)
+            }
+            is Action.DeleteNote -> {
+
+            }
+        }
+    }
+
+    private fun reducer(oldState: State, change: Change): State {
+        return when(change) {
+            Change.Loading -> oldState.copy(isLoading = change.isLoading)
+            Change.InsertNode, Change.DeleteNode -> oldState.copy(isLoading = change.isLoading)
+            is Change.Error -> oldState.copy(isLoading = false, error = change.error)
+        }
+    }
+
     fun insertNote(note: Note) = viewModelScope.launch(Dispatchers.Default) {
         noteUseCase.insertNote(note)
     }
@@ -40,7 +78,26 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
     fun deleteNote(note: Note) = viewModelScope.launch {
         noteUseCase.deleteNote(note)
     }
+
+    sealed class Action {
+        data class InsertNote(val note: Note) : Action()
+        data class DeleteNote(val note: Note) : Action()
+    }
+
+    data class State(val isLoading: Boolean, val error: Throwable? = null)
+
+    sealed class Change(val isLoading: Boolean,val error: Throwable? = null) {
+        object Loading : Change(isLoading = true)
+        object InsertNode: Change(isLoading = false)
+        object DeleteNode: Change(isLoading = false)
+        class Error(error: Throwable): Change(isLoading = false)
+    }
 }
+
+// TODO Make the app MVI
+// TODO 1. Dispatch intent (action), 2. Push the actions into a flow into lower level, 3. Subscribe (collect) the Flow which returns Changes, 4. Reduce it to States and post.
+// TODO Look into possible tools to implement item 1, 2, and 3.
+
 
 // TODO Next Big features
 // 1. Action buttons to insert
