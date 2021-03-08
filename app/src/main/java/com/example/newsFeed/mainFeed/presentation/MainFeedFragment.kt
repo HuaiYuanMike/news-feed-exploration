@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -26,22 +27,15 @@ class MainFeedFragment : Fragment() {
     private lateinit var emptyView: View
     private lateinit var mainFeedViewModel: MainFeedViewModel 
     private lateinit var fab: FloatingActionButton
+    private lateinit var progressBar: ProgressBar
 
     private val testList = listOf(
         Note(0, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
         Note(1, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(2, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(3, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(4, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(5, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(6, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(7, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(8, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(9, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?"),
-        Note(10, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?")
+        Note(2, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?")
     )
 
-    private val testNote = Note(0, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?")
+    private val testNote = Note(123456, "title1", "author", "Do you have 5 minutes today or tomorrow to catch up and give me a quick update on what opportunities you’d see as worthwhile to run past you?")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,10 +49,16 @@ class MainFeedFragment : Fragment() {
         mainFeedViewModel.notes.observe(this,
             Observer<List<Note>> { t -> renderList(t) })
 
-        // TODO TEST
-        if (mainFeedViewModel.notes.value.isNullOrEmpty()) {
-            mainFeedViewModel.insertNote(testNote)
-        }
+        mainFeedViewModel.states.observe(this, Observer { state ->
+            if (state.isLoading) {
+                progressBar.visibility = View.VISIBLE
+            } else {
+                progressBar.visibility = View.GONE
+            }
+        })
+
+        // TODO Test to insert a default note, remove when done.
+        mainFeedViewModel.dispatchAction(MainFeedViewModel.Action.InsertNote(testNote))
     }
 
     override fun onCreateView(
@@ -80,6 +80,8 @@ class MainFeedFragment : Fragment() {
             EditNoteFragment()
                 .show(requireFragmentManager(), EditNoteFragment::class.simpleName)
         }
+
+        progressBar = view.findViewById(R.id.progress_circular)
 
         initRecyclerView(view)
     }

@@ -9,6 +9,7 @@ import com.example.newsFeed.mainFeed.model.Note
 import com.example.newsFeed.mainFeed.domain.NoteUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -31,6 +32,7 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
     init {
         viewModelScope.launch {
             for (change in changes) {
+                // TODO remove the non-null assertion operator if possible
                 _states.value = reducer(_states.value!!, change)
             }
         }
@@ -53,6 +55,8 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
         when (action) {
             is Action.InsertNote -> {
                 changes.send(Change.Loading)
+                // TODO Test delay to simulate long running operation, remove when done.
+                delay(1000)
                 // TODO change to changes.send(noteUseCase.insertNote(action.note))
                 noteUseCase.insertNote(action.note)
                 changes.send(Change.InsertNode)
@@ -69,10 +73,6 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
             Change.InsertNode, Change.DeleteNode -> oldState.copy(isLoading = change.isLoading)
             is Change.Error -> oldState.copy(isLoading = false, error = change.error)
         }
-    }
-
-    fun insertNote(note: Note) = viewModelScope.launch(Dispatchers.Default) {
-        noteUseCase.insertNote(note)
     }
 
     fun deleteNote(note: Note) = viewModelScope.launch {
