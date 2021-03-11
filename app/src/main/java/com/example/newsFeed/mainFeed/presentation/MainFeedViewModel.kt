@@ -1,17 +1,13 @@
 package com.example.newsFeed.mainFeed.presentation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsFeed.mainFeed.model.Note
 import com.example.newsFeed.mainFeed.domain.NoteUseCase
-import kotlinx.coroutines.Dispatchers
+import com.example.newsFeed.mainFeed.model.Note
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,8 +16,6 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
     private val TAG = javaClass.simpleName
 
     private val _notes: MutableLiveData<List<Note>> = MutableLiveData<List<Note>>()
-
-    val notes: LiveData<List<Note>> = _notes
 
     private val _states: MutableLiveData<State> = MutableLiveData(State(isLoading = false))
 
@@ -38,31 +32,32 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
         }
     }
 
-    // This does not need to be suspend
-    fun getAllNotes() = viewModelScope.launch(Dispatchers.Default) {
-        noteUseCase.retrieveAllNotes()
-            .catch { exception ->
-                Log.d(TAG, exception.message)
-                // TODO Error Handling
-            }
-            .collect { list ->
-                _notes.postValue(list)
-            }
-    }
+    // Commented out for reference, utilize Flow provided by Room.
+//    fun getAllNotes() = viewModelScope.launch(Dispatchers.Default) {
+//        noteUseCase.retrieveAllNotes()
+//            .catch { exception ->
+//                Log.d(TAG, exception.message)
+//                // TODO Error Handling
+//            }
+//            .collect { list ->
+//                _notes.postValue(list)
+//            }
+//    }
 
     fun dispatchAction(action: Action) = viewModelScope.launch {
         // Start to produce event to the stream.
+        changes.send(Change.Loading)
+        // TODO Test delay to simulate long running operation, remove when done.
+        delay(1000)
         when (action) {
+            is Action.GetAllNotes -> {
+                changes.send(noteUseCase.retrieveAllNotes())
+            }
             is Action.InsertNote -> {
-                changes.send(Change.Loading)
-                // TODO Test delay to simulate long running operation, remove when done.
-                delay(1000)
-                // TODO change to changes.send(noteUseCase.insertNote(action.note))
-                noteUseCase.insertNote(action.note)
-                changes.send(Change.InsertNode)
+                changes.send(noteUseCase.insertNote(action.note))
             }
             is Action.DeleteNote -> {
-
+                changes.send(noteUseCase.deleteNote(action.note))
             }
         }
     }
@@ -70,27 +65,27 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
     private fun reducer(oldState: State, change: Change): State {
         return when(change) {
             Change.Loading -> oldState.copy(isLoading = change.isLoading)
-            Change.InsertNode, Change.DeleteNode -> oldState.copy(isLoading = change.isLoading)
-            is Change.Error -> oldState.copy(isLoading = false, error = change.error)
+            is Change.AllNotesRetrieved -> oldState.copy(isLoading = change.isLoading, notes = change.notes)
+            is Change.NoteInserted -> oldState.copy(isLoading = change.isLoading, notes = change.notes)
+            is Change.NoteDeleted -> oldState.copy(isLoading = change.isLoading, notes = change.notes)
+            is Change.Error -> oldState.copy(isLoading = change.isLoading, error = change.error)
         }
     }
 
-    fun deleteNote(note: Note) = viewModelScope.launch {
-        noteUseCase.deleteNote(note)
-    }
-
     sealed class Action {
+        object GetAllNotes : Action()
         data class InsertNote(val note: Note) : Action()
         data class DeleteNote(val note: Note) : Action()
     }
 
-    data class State(val isLoading: Boolean, val error: Throwable? = null)
+    data class State(val isLoading: Boolean, val notes: List<Note> = emptyList(), val error: Throwable? = null)
 
-    sealed class Change(val isLoading: Boolean,val error: Throwable? = null) {
+    sealed class Change(val isLoading: Boolean) {
         object Loading : Change(isLoading = true)
-        object InsertNode: Change(isLoading = false)
-        object DeleteNode: Change(isLoading = false)
-        class Error(error: Throwable): Change(isLoading = false)
+        data class AllNotesRetrieved(val notes: List<Note>): Change(isLoading = false)
+        data class NoteInserted(val notes: List<Note>): Change(isLoading = false)
+        data class NoteDeleted(val notes: List<Note>): Change(isLoading = false)
+        data class Error(val error: Throwable): Change(isLoading = false)
     }
 }
 

@@ -45,16 +45,14 @@ class MainFeedFragment : Fragment() {
             MainFeedViewModelFactory()
         ).get(MainFeedViewModel::class.java)
 
-        // Observe and render states
-        mainFeedViewModel.notes.observe(this,
-            Observer<List<Note>> { t -> renderList(t) })
-
         mainFeedViewModel.states.observe(this, Observer { state ->
             if (state.isLoading) {
                 progressBar.visibility = View.VISIBLE
             } else {
                 progressBar.visibility = View.GONE
             }
+
+            renderList(state.notes)
         })
 
         // TODO Test to insert a default note, remove when done.
@@ -90,11 +88,7 @@ class MainFeedFragment : Fragment() {
         super.onResume()
 
         // Invoke action
-        mainFeedViewModel.getAllNotes()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
+        mainFeedViewModel.dispatchAction(MainFeedViewModel.Action.GetAllNotes)
     }
 
     private fun renderList(itemList: List<Note>?) {
@@ -118,7 +112,7 @@ class MainFeedFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val apdapter = (recyclerView.adapter as MainFeedListAdapter)
                 val note = apdapter.itemList[viewHolder.adapterPosition]
-                mainFeedViewModel.deleteNote(note)
+                mainFeedViewModel.dispatchAction(MainFeedViewModel.Action.DeleteNote(note))
             }
         }).attachToRecyclerView(recyclerView)
         //        recyclerView.addItemDecoration(DividerItemDecoration(this.context, RecyclerView.VERTICAL))
