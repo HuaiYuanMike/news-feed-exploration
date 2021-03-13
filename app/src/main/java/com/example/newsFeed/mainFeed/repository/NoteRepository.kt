@@ -13,7 +13,7 @@ class NoteRepository @Inject constructor(
     private val randomCatImageApi: RandomCatImageApi
 ) {
 
-    fun retrieveAllNotes(): Flow<List<Note>> = roomDatabase.getNoteDao().loadAllNotes()
+    suspend fun retrieveAllNotes(): List<Note> = roomDatabase.getNoteDao().loadAllNotes()
 
     suspend fun insertNode(note: Note) {
         roomDatabase.getNoteDao().insertNotes(note)
