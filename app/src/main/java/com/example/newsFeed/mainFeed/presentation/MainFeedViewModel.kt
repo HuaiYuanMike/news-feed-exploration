@@ -45,8 +45,6 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
     fun dispatchAction(action: Action) = viewModelScope.launch {
         // Start to produce event to the stream.
         changes.send(Change.Loading)
-        // TODO Test delay to simulate long running operation, remove when done.
-        delay(1000)
         when (action) {
             is Action.GetAllNotes -> {
                 changes.send(noteUseCase.retrieveAllNotes())
