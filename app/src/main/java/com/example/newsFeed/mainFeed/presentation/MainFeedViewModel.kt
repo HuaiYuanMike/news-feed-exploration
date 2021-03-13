@@ -15,8 +15,6 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
 
     private val TAG = javaClass.simpleName
 
-    private val _notes: MutableLiveData<List<Note>> = MutableLiveData<List<Note>>()
-
     private val _states: MutableLiveData<State> = MutableLiveData(State(isLoading = false))
 
     val states: LiveData<State> = _states
