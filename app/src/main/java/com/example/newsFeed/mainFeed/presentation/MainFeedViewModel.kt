@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsFeed.mainFeed.domain.NoteUseCase
-import com.example.newsFeed.mainFeed.model.Note
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,11 +13,14 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
 
     private val TAG = javaClass.simpleName
 
-    private val _states: MutableLiveData<State> = MutableLiveData(State(isLoading = false))
+    private val changes: Channel<Change> = Channel()
+
+    private val _states: MutableLiveData<State> = MutableLiveData(
+        State(isLoading = false)
+    )
 
     val states: LiveData<State> = _states
 
-    private val changes: Channel<Change> = Channel()
 
     init {
         viewModelScope.launch {
@@ -68,31 +69,9 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
         }
     }
 
-    sealed class Action {
-        object GetAllNotes : Action()
-        data class InsertNote(val note: Note) : Action()
-        data class DeleteNote(val note: Note) : Action()
-    }
-
-    data class State(val isLoading: Boolean, val notes: List<Note> = emptyList(), val error: Throwable? = null)
-
-    sealed class Change(val isLoading: Boolean) {
-        object Loading : Change(isLoading = true)
-        data class AllNotesRetrieved(val notes: List<Note>): Change(isLoading = false)
-        data class NoteInserted(val notes: List<Note>): Change(isLoading = false)
-        data class NoteDeleted(val notes: List<Note>): Change(isLoading = false)
-        data class Error(val error: Throwable): Change(isLoading = false)
-    }
 }
 
-// TODO Make the app MVI
-// TODO 1. Dispatch intent (action), 2. Push the actions into a flow into lower level, 3. Subscribe (collect) the Flow which returns Changes, 4. Reduce it to States and post.
-// TODO Look into possible tools to implement item 1, 2, and 3.
-
-
 // TODO Next Big features
-// 1. Action buttons to insert
-// 1.2 Dialog for adding new note
 // 2. DiffUtil for recyclerView
 // 3. Swipe to remove
 // 4. Drag to change position
@@ -110,10 +89,7 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
 // 3. Dependency injection or something else which remove the usage of ViewModelProvider and Factory
 // 4. ViewModel SavedStateHandle
 // 5. Paging
-// 5. HILT
 // 6. Retrofit - REST API - HTTP ?
-// 7. Image loading library
-
 
 // TODO Future
 //  - Paging Library from Jetpack
