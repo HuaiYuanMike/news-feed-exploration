@@ -56,7 +56,7 @@ class MainFeedFragment : Fragment() {
         })
 
         // TODO Test to insert a default note, remove when done.
-        mainFeedViewModel.dispatchAction(MainFeedViewModel.Action.InsertNote(testNote))
+        mainFeedViewModel.dispatchAction(Action.InsertNote(testNote))
     }
 
     override fun onCreateView(
@@ -88,7 +88,7 @@ class MainFeedFragment : Fragment() {
         super.onResume()
 
         // Invoke action
-        mainFeedViewModel.dispatchAction(MainFeedViewModel.Action.GetAllNotes)
+        mainFeedViewModel.dispatchAction(Action.GetAllNotes)
     }
 
     private fun renderList(itemList: List<Note>?) {
@@ -112,7 +112,7 @@ class MainFeedFragment : Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val apdapter = (recyclerView.adapter as MainFeedListAdapter)
                 val note = apdapter.itemList[viewHolder.adapterPosition]
-                mainFeedViewModel.dispatchAction(MainFeedViewModel.Action.DeleteNote(note))
+                mainFeedViewModel.dispatchAction(Action.DeleteNote(note))
             }
         }).attachToRecyclerView(recyclerView)
         //        recyclerView.addItemDecoration(DividerItemDecoration(this.context, RecyclerView.VERTICAL))
