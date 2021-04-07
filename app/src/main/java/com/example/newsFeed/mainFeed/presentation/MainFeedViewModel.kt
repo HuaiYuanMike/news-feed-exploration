@@ -1,10 +1,12 @@
 package com.example.newsFeed.mainFeed.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsFeed.mainFeed.domain.NoteUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -43,8 +45,9 @@ class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
 //            }
 //    }
 
-    fun dispatchAction(action: Action) = viewModelScope.launch {
+    fun dispatchAction(action: Action) = viewModelScope.launch(Dispatchers.Unconfined) {
         // Start to produce event to the stream.
+        Log.d("mikelog", "Running on thread ${Thread.currentThread().name}")
         changes.send(Change.Loading)
         when (action) {
             is Action.GetAllNotes -> {

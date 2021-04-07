@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitHelper {
-    val randomCatImageApi: RandomCatImageApi = getRetrofit("https://aws.random.cat/").create(RandomCatImageApi::class.java)
+    val randomCatImageService: RandomCatImageService = getRetrofit("https://aws.random.cat/").create(RandomCatImageService::class.java)
 
     private fun getRetrofit(baseUrl: String): Retrofit {
         return Retrofit.Builder()
