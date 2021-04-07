@@ -2,6 +2,7 @@ package com.example.newsFeed.mainFeed.presentation
 
 import android.graphics.*
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +40,8 @@ class MainFeedFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        savedInstanceState?.putString(MainActivity.ARGUMENT_KEY_TEST, arguments?.getString(MainActivity.ARGUMENT_KEY_TEST))
+        Log.d("mikelog", "Do we have the TEST data? ${savedInstanceState?.getString(MainActivity.ARGUMENT_KEY_TEST, "NO")}")
 
         mainFeedViewModel = ViewModelProvider(
             this,
@@ -56,7 +59,7 @@ class MainFeedFragment : Fragment() {
         })
 
         // TODO Test to insert a default note, remove when done.
-        mainFeedViewModel.dispatchAction(Action.InsertNote(testNote))
+//        mainFeedViewModel.dispatchAction(Action.InsertNote(testNote))
     }
 
     override fun onCreateView(

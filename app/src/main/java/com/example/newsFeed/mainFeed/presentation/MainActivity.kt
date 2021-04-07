@@ -14,6 +14,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager2
 
+    companion object {
+        val ARGUMENT_KEY_TEST = "KEY.TEST"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -40,7 +44,11 @@ class MainActivity : AppCompatActivity() {
         override fun getItemCount() = 3
 
         override fun createFragment(position: Int): Fragment {
-            return MainFeedFragment()
+            val fragment = MainFeedFragment()
+            fragment.arguments = Bundle().apply {
+                putString(ARGUMENT_KEY_TEST, "This is a test!")
+            }
+            return fragment
         }
 
     }

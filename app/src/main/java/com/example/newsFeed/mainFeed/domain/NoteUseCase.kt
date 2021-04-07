@@ -14,6 +14,7 @@ class NoteUseCase @Inject constructor(private val repository: NoteRepository) {
         = Change.AllNotesRetrieved(repository.retrieveAllNotes())
 
     suspend fun insertNote(note: Note): Change {
+        Log.d("mikelog", "InsertNote performed in ${Thread.currentThread().name} thread.")
         var newNote = note.copy()
         if (newNote.imageUri.isEmpty()) {
             val imageUrl = repository.getRandomCatImage().imageUrl
