@@ -1,9 +1,9 @@
 package com.example.newsFeed
 
 import android.app.Application
-import com.example.newsFeed.di.AppComponent
-import com.example.newsFeed.di.AppModule
-import com.example.newsFeed.di.DaggerAppComponent
+import com.example.newsFeed.noteFeed.di.AppComponent
+import com.example.newsFeed.noteFeed.di.AppModule
+import com.example.newsFeed.noteFeed.di.DaggerAppComponent
 
 class NewsFeedApplication : Application() {
 

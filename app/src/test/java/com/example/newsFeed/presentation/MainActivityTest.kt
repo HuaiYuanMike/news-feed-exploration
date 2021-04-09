@@ -1,7 +1,7 @@
 package com.example.newsFeed.presentation
 
 import com.example.newsFeed.R
-import com.example.newsFeed.mainFeed.presentation.MainActivity
+import com.example.newsFeed.noteFeed.presentation.noteFeed.MainActivity
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
