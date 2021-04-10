@@ -10,7 +10,7 @@ import com.example.newsFeed.R
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class MainActivity : AppCompatActivity() {
+class NoteFeedActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager2
 
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun createFragment(position: Int): Fragment {
             val fragment =
-                MainFeedFragment()
+                NoteFeedFragment()
             fragment.arguments = Bundle().apply {
                 putString(ARGUMENT_KEY_TEST, "This is a test!")
             }

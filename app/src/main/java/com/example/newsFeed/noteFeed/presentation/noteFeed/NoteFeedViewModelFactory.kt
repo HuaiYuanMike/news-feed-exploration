@@ -6,14 +6,14 @@ import com.example.newsFeed.NewsFeedApplication
 import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
-class MainFeedViewModelFactory : ViewModelProvider.NewInstanceFactory() {
+class NoteFeedViewModelFactory : ViewModelProvider.NewInstanceFactory() {
 
     init {
         NewsFeedApplication.instance.appComponent.inject(this)
     }
 
     @Inject
-    lateinit var viewModel: MainFeedViewModel
+    lateinit var viewModel: NoteFeedViewModel
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return viewModel as T

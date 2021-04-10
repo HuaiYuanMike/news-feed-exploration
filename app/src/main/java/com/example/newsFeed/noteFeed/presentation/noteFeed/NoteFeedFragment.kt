@@ -20,14 +20,14 @@ import com.example.newsFeed.noteFeed.presentation.noteEdit.EditNoteFragment
 import com.example.newsFeed.noteFeed.model.Note
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MainFeedFragment : Fragment() {
+class NoteFeedFragment : Fragment() {
 
     private val listAdapter =
-        MainFeedListAdapter()
+        NoteFeedListAdapter()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var emptyView: View
-    private lateinit var mainFeedViewModel: MainFeedViewModel
+    private lateinit var noteFeedViewModel: NoteFeedViewModel
     private lateinit var fab: FloatingActionButton
     private lateinit var progressBar: ProgressBar
 
@@ -42,17 +42,17 @@ class MainFeedFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         savedInstanceState?.putString(
-            MainActivity.ARGUMENT_KEY_TEST, arguments?.getString(
-                MainActivity.ARGUMENT_KEY_TEST))
+            NoteFeedActivity.ARGUMENT_KEY_TEST, arguments?.getString(
+                NoteFeedActivity.ARGUMENT_KEY_TEST))
         Log.d("mikelog", "Do we have the TEST data? ${savedInstanceState?.getString(
-            MainActivity.ARGUMENT_KEY_TEST, "NO")}")
+            NoteFeedActivity.ARGUMENT_KEY_TEST, "NO")}")
 
-        mainFeedViewModel = ViewModelProvider(
+        noteFeedViewModel = ViewModelProvider(
             this,
-            MainFeedViewModelFactory()
-        ).get(MainFeedViewModel::class.java)
+            NoteFeedViewModelFactory()
+        ).get(NoteFeedViewModel::class.java)
 
-        mainFeedViewModel.states.observe(this, Observer { state ->
+        noteFeedViewModel.states.observe(this, Observer { state ->
             if (state.isLoading) {
                 progressBar.visibility = View.VISIBLE
             } else {
@@ -95,7 +95,7 @@ class MainFeedFragment : Fragment() {
         super.onResume()
 
         // Invoke action
-        mainFeedViewModel.dispatchAction(Action.GetAllNotes)
+        noteFeedViewModel.dispatchAction(Action.GetAllNotes)
     }
 
     private fun renderList(itemList: List<Note>?) {
@@ -117,9 +117,9 @@ class MainFeedFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         ItemTouchHelper(object : SwipeItemTouchHelperCallback() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val apdapter = (recyclerView.adapter as MainFeedListAdapter)
+                val apdapter = (recyclerView.adapter as NoteFeedListAdapter)
                 val note = apdapter.itemList[viewHolder.adapterPosition]
-                mainFeedViewModel.dispatchAction(Action.DeleteNote(note))
+                noteFeedViewModel.dispatchAction(Action.DeleteNote(note))
             }
         }).attachToRecyclerView(recyclerView)
         //        recyclerView.addItemDecoration(DividerItemDecoration(this.context, RecyclerView.VERTICAL))

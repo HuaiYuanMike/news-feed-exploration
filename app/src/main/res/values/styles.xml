@@ -8,16 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="MainFeedCard">
-        <item name="android:layout_height">@dimen/mainFeed_item_height</item>
+    <style name="NoteFeedCard">
+        <item name="android:layout_height">@dimen/feed_item_height</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:clickable">true</item>
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
         <item name="cardBackgroundColor">@color/colorPrimaryDark</item>
         <item name="cardCornerRadius">4dp</item>
         <item name="cardElevation">8dp</item>
-        <item name="contentPadding">@dimen/mainFeed_item_padding</item>
-        <item name="android:layout_margin">@dimen/mainFeed_item_padding</item>
+        <item name="contentPadding">@dimen/feed_item_padding</item>
+        <item name="android:layout_margin">@dimen/feed_item_padding</item>
     </style>
 
 </resources>

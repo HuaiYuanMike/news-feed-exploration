@@ -11,11 +11,11 @@ import com.example.newsFeed.R
 import com.example.newsFeed.noteFeed.model.Note
 import com.squareup.picasso.Picasso
 
-class MainFeedListAdapter : RecyclerView.Adapter<MainFeedListAdapter.MainFeedViewHolder>() {
+class NoteFeedListAdapter : RecyclerView.Adapter<NoteFeedListAdapter.NoteFeedViewHolder>() {
 
     var itemList: List<Note> = arrayListOf()
 
-    class MainFeedViewHolder(itemView: View) : RecyclerView.ViewHolder (itemView){
+    class NoteFeedViewHolder(itemView: View) : RecyclerView.ViewHolder (itemView){
 
         private val title = itemView.findViewById<TextView>(R.id.title)
         private val content = itemView.findViewById<TextView>(R.id.content)
@@ -30,9 +30,9 @@ class MainFeedListAdapter : RecyclerView.Adapter<MainFeedListAdapter.MainFeedVie
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainFeedViewHolder {
-        return MainFeedViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_main_feed_note, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteFeedViewHolder {
+        return NoteFeedViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_note_feed, parent, false)
         )
     }
 
@@ -40,13 +40,14 @@ class MainFeedListAdapter : RecyclerView.Adapter<MainFeedListAdapter.MainFeedVie
 
     override fun getItemViewType(position: Int) = 0
 
-    override fun onBindViewHolder(holder: MainFeedViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NoteFeedViewHolder, position: Int) {
         holder.bind(itemList[position])
     }
 
+    //TODO Extension function
     fun updateList(newList: List<Note>) {
         DiffUtil.calculateDiff(
-            MainFeedDiffUtilCallback(
+            NoteFeedDiffUtilCallback(
                 itemList,
                 newList
             )
@@ -56,7 +57,7 @@ class MainFeedListAdapter : RecyclerView.Adapter<MainFeedListAdapter.MainFeedVie
         }
     }
 
-    class MainFeedDiffUtilCallback(val oldList: List<Note>, val newList: List<Note>) : DiffUtil.Callback() {
+    class NoteFeedDiffUtilCallback(val oldList: List<Note>, val newList: List<Note>) : DiffUtil.Callback() {
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) = oldList[oldItemPosition].id == newList[newItemPosition].id
 
         override fun getOldListSize() = oldList.size

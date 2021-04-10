@@ -11,7 +11,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase) : ViewModel() {
+class NoteFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase) : ViewModel() {
 
     private val TAG = javaClass.simpleName
 
