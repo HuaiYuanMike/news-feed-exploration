@@ -5,13 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsFeed.noteFeed.usecase.NoteUseCase
+import com.example.newsFeed.noteFeed.usecase.NoteFeedUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class NoteFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase) : ViewModel() {
+class NoteFeedViewModel @Inject constructor(private val noteFeedUseCase: NoteFeedUseCase) : ViewModel() {
 
     private val TAG = javaClass.simpleName
 
@@ -51,13 +51,13 @@ class NoteFeedViewModel @Inject constructor(private val noteUseCase: NoteUseCase
         changes.send(Change.Loading)
         when (action) {
             is Action.GetAllNotes -> {
-                changes.send(noteUseCase.retrieveAllNotes())
+                changes.send(noteFeedUseCase.retrieveAllNotes())
             }
             is Action.InsertNote -> {
-                changes.send(noteUseCase.insertNote(action.note))
+                changes.send(noteFeedUseCase.insertNote(action.note))
             }
             is Action.DeleteNote -> {
-                changes.send(noteUseCase.deleteNote(action.note))
+                changes.send(noteFeedUseCase.deleteNote(action.note))
             }
         }
     }

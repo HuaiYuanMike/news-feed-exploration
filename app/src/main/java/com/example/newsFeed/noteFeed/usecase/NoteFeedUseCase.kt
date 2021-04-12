@@ -6,7 +6,7 @@ import com.example.newsFeed.noteFeed.presentation.noteFeed.Change
 import com.example.newsFeed.noteFeed.repository.NoteFeedRepository
 import javax.inject.Inject
 
-class NoteUseCase @Inject constructor(private val repository: NoteFeedRepository) {
+class NoteFeedUseCase @Inject constructor(private val repository: NoteFeedRepository) {
 
     //For the purpose of MVI, a suspend function returning a list of notes is probably better than
     // a Flow of list of notes which receives the updates to the notes automatically.
