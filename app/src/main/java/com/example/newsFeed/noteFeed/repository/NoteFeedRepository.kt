@@ -7,7 +7,7 @@ import com.example.newsFeed.noteFeed.model.CatImage
 import com.example.newsFeed.noteFeed.model.Note
 import javax.inject.Inject
 
-class NoteRepository @Inject constructor(
+class NoteFeedRepository @Inject constructor(
     private val noteDatabase: NoteDatabase,
     private val randomCatImageService: RandomCatImageService
 ) {
