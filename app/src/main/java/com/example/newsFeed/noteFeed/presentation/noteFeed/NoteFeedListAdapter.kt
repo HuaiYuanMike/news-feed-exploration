@@ -15,21 +15,6 @@ class NoteFeedListAdapter : RecyclerView.Adapter<NoteFeedListAdapter.NoteFeedVie
 
     var itemList: List<Note> = arrayListOf()
 
-    class NoteFeedViewHolder(itemView: View) : RecyclerView.ViewHolder (itemView){
-
-        private val title = itemView.findViewById<TextView>(R.id.title)
-        private val content = itemView.findViewById<TextView>(R.id.content)
-        private val imageDisplay = itemView.findViewById<ImageView>(R.id.image_display)
-
-        fun bind(note: Note) {
-            title.text = note.title
-            content.text = note.content
-
-            // load and display image
-            Picasso.with(itemView.context).load(note.imageUri).fit().into(imageDisplay)
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteFeedViewHolder {
         return NoteFeedViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_note_feed, parent, false)
@@ -44,7 +29,23 @@ class NoteFeedListAdapter : RecyclerView.Adapter<NoteFeedListAdapter.NoteFeedVie
         holder.bind(itemList[position])
     }
 
-    //TODO Extension function
+    class NoteFeedViewHolder(itemView: View) : RecyclerView.ViewHolder (itemView){
+
+        private val title = itemView.findViewById<TextView>(R.id.title)
+        private val content = itemView.findViewById<TextView>(R.id.content)
+        private val imageDisplay = itemView.findViewById<ImageView>(R.id.image_display)
+
+        fun bind(note: Note) {
+            title.text = note.title
+            content.text = note.content
+
+            // load and display image
+            if (note.imageUri.isNotEmpty()) {
+                Picasso.with(itemView.context).load(note.imageUri).fit().into(imageDisplay)
+            }
+        }
+    }
+
     fun updateList(newList: List<Note>) {
         DiffUtil.calculateDiff(
             NoteFeedDiffUtilCallback(

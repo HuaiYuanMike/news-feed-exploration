@@ -6,7 +6,7 @@ import com.example.newsFeed.noteFeed.model.Note
 
 const val APP_DATABASE_NAME = "note-db"
 
-@Database(entities = [Note::class], version = 2)
+@Database(entities = [Note::class], version = 3)
 abstract class NoteDatabase : RoomDatabase() {
     abstract fun getNoteDao(): NoteDao
 }
